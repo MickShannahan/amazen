@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using amazen.Models;
 using amazen.Services;
@@ -16,10 +17,13 @@ namespace amazen.Controllers
 
     private readonly AccountService _acs;
 
-    public MerchantsController(MerchantsService ms, AccountService acs)
+    private readonly ProductsService _ps;
+
+    public MerchantsController(MerchantsService ms, AccountService acs, ProductsService ps)
     {
       _ms = ms;
       _acs = acs;
+      _ps = ps;
     }
 
     [HttpPost]
@@ -45,6 +49,19 @@ namespace amazen.Controllers
       try
       {
         return Ok(_ms.GetOne(id));
+      }
+      catch (System.Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
+
+    [HttpGet("{id}/products")]
+    public ActionResult<List<ProductMerchantView>> GetProductsByMerchantId(int id)
+    {
+      try
+      {
+        return Ok(_ps.GetProductsByMerchantId(id));
       }
       catch (System.Exception e)
       {

@@ -17,3 +17,20 @@
 --    REFERENCES accounts(id)
 -- )
 
+
+-- CREATE TABLE Products(
+--   id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+--   merchantId int NOT NULL,
+--   creatorId VARCHAR(255) NOT NULL,
+--   name VARCHAR(255) NOT NULL,
+--   price double NOT NULL DEFAULT 1.00,
+--   imgUrl VARCHAR(255),
+--   qty int,
+
+--   FOREIGN KEY (merchantId)
+--   REFERENCES merchants(id),
+
+--   FOREIGN KEY (creatorId)
+--   REFERENCES accounts(Id)
+
+-- )

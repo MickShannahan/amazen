@@ -44,6 +44,8 @@ namespace amazen
       services.AddScoped<AccountService>();
       services.AddTransient<MerchantsRepository>();
       services.AddTransient<MerchantsService>();
+      services.AddTransient<ProductsRepository>();
+      services.AddTransient<ProductsService>();
     }
 
     private void ConfigureCors(IServiceCollection services)
