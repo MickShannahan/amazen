@@ -8,6 +8,12 @@ class MerchantService {
     logger.log(res.data)
     AppState.activeMerchant = res.data
   }
+
+  async getMerchant(id) {
+    const res = await api.get('api/merchants/' + id)
+    logger.log('merchant', res.data)
+    AppState.activeMerchant = res.data
+  }
 }
 
 export const merchantService = new MerchantService()

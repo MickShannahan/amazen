@@ -30,5 +30,33 @@ namespace amazen.Services
     {
       return _repo.GetProductsByMerchantId(id);
     }
+
+    public Product GetOne(int id)
+    {
+      Product product = _repo.GetOne(id);
+      if (product != null)
+      {
+        return product;
+      }
+      throw new Exception("That object by id does not exist");
+    }
+
+    internal Product Update(Product update)
+    {
+      Product original = GetOne(update.Id);
+      if (original.CreatorId == update.CreatorId)
+      {
+        update.Name = update.Name ?? original.Name;
+        update.Price = update.Price > 0.00 ? update.Price : original.Price;
+        update.ImgUrl = update.ImgUrl ?? original.ImgUrl;
+        update.Qty = original.Qty;
+        if (_repo.Update(update) > 0)
+        {
+          return update;
+        }
+        throw new Exception("something bad happened, might want call past mick");
+      }
+      throw new Exception("you are not allowe to update this");
+    }
   }
 }

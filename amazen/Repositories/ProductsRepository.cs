@@ -41,20 +41,44 @@ namespace amazen.Repositories
       return _db.ExecuteScalar<int>(sql, newProduct);
     }
 
+    internal Product GetOne(int id)
+    {
+      string sql = @"
+      SELECT * FROM products
+      WHERE id = @id;
+      ";
+      return _db.QueryFirstOrDefault<Product>(sql, new { id });
+    }
+
     internal List<ProductMerchantView> GetProductsByMerchantId(int id)
     {
       string sql = @"
       SELECT 
       p.*,
-      m.*
+      m.*,
+      a.*
       FROM products p
       Join merchants m ON p.merchantId = m.id
+      Join accounts a ON p.creatorId = a.id
       WHERE p.merchantId = @id;";
-      return _db.Query<ProductMerchantView, Merchant, ProductMerchantView>(sql, (p, m) =>
-      {
-        p.Merchant = m;
-        return p;
-      }, new { id }, splitOn: "id").ToList();
+      return _db.Query<ProductMerchantView, Merchant, Account, ProductMerchantView>(sql, (p, m, a) =>
+       {
+         p.Merchant = m;
+         p.Creator = a;
+         return p;
+       }, new { id }, splitOn: "id").ToList();
+    }
+
+    internal int Update(Product update)
+    {
+      string sql = @"
+      UPDATE products SET 
+      name = @Name,
+      price = @Price,
+      imgUrl = @ImgUrl,
+      qty = @Qty
+      WHERE id = @Id;";
+      return _db.Execute(sql, update);
     }
   }
 }

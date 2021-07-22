@@ -51,5 +51,23 @@ namespace amazen.Controllers
       }
     }
 
+    [HttpPut("{id}")]
+    [Authorize]
+    async public Task<ActionResult<Product>> Update(int id, [FromBody] Product update)
+    {
+      try
+      {
+        Account account = await HttpContext.GetUserInfoAsync<Account>();
+        update.Id = id;
+        update.CreatorId = account.Id;
+        return Ok(_ps.Update(update));
+
+      }
+      catch (System.Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
+
   }
 }

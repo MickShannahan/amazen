@@ -28,11 +28,6 @@
           </router-link>
         </li>
         <li class="nav-item">
-          <router-link :to="{ name: 'Merchant' }" class="nav-link">
-            Merchant
-          </router-link>
-        </li>
-        <li class="nav-item">
           <router-link :to="{ name: 'Products' }" class="nav-link">
             Products
           </router-link>

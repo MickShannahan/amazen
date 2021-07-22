@@ -11,8 +11,12 @@
 <script>
 import { AppState } from '../AppState'
 import { computed, reactive, onMounted } from 'vue'
+import { productService } from '../services/ProductService'
 export default {
   setup() {
+    onMounted(() => {
+      productService.getAll()
+    })
     return { products: computed(() => AppState.products) }
   }
 }

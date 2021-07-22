@@ -20,5 +20,6 @@ namespace amazen.Models
   {
     public Merchant Merchant { get; set; }
 
+    public Account Creator { get; set; }
   }
 }
